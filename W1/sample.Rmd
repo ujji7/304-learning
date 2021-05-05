@@ -2,7 +2,9 @@
 title: "Simulation practise and redoing the class code with some extra stuff"
 author: "Uzair Mirza"
 date: "05/05/2021"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 
