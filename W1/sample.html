@@ -387,7 +387,10 @@ summary {
 <p>set.seed(x) function where x is a number is used to make the sampling consistent for every run. Although the samples are still random but set.seed() makes it consistent when lets say the marker will run the code chunk with the same seed will get the same randomly generated values. Without setting seed each execution of the code will result in a different generated values for the sample.</p>
 <pre class="r"><code>            ##NEED TO FIND A SOLUTION TO THIS, NOT WORKING CURRENTLY
 
-# If a certain option needs to be frequently set to a value in multiple code chunks, you can consider setting it globally in the first code chunk of your document. Hence over here we set this chunk as a &quot;setup&quot; to make all the to be generated samples consistent.
+# If a certain option needs to be frequently set to a value in multiple code 
+# chunks, you can consider setting it globally in the first code chunk of your 
+# document. Hence over here we set this chunk as a &quot;setup&quot; to make all the to be 
+# generated samples consistent with the given set seed.
 
 ## setting up seed
 set.seed(6969)</code></pre>

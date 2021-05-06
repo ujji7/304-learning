@@ -3,8 +3,8 @@ title: "Simulation practise and redoing the class code with some extra stuff"
 author: "Uzair Mirza"
 date: "05/05/2021"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 
@@ -21,7 +21,10 @@ Although the samples are still random but set.seed() makes it consistent when le
 ```{r, setup}
             ##NEED TO FIND A SOLUTION TO THIS, NOT WORKING CURRENTLY
 
-# If a certain option needs to be frequently set to a value in multiple code chunks, you can consider setting it globally in the first code chunk of your document. Hence over here we set this chunk as a "setup" to make all the to be generated samples consistent.
+# If a certain option needs to be frequently set to a value in multiple code 
+# chunks, you can consider setting it globally in the first code chunk of your 
+# document. Hence over here we set this chunk as a "setup" to make all the to be 
+# generated samples consistent with the given set seed.
 
 ## setting up seed
 set.seed(6969)
@@ -72,4 +75,4 @@ data.2 <- data.2 %>%
 data.2
 ```
 ## SUMMARY
-This document contains details and is practice for using and generating different samples techniques for simulation. On top of that making dataframes, mutating and apending to existing data frames and rounding the entries in the dataframe. 
+This document contains details and is practice for using and generating different samples techniques for simulation. On top of that making dataframes, mutating and apending to existing data frames and rounding the entries in the dataframe.
