@@ -84,7 +84,7 @@ sd(ages)
 $\sigma^2_{y} = \frac{1}{N-1}\Sigma(y_{i}-\mu_{y})^2 \\$
 $N = 7 \\$ 
 $\mu_{y} = \frac{1}{N}\Sigma y_{i} = \frac{1}{7}*140 = 20 \\$
-$\sigma^2_{y} = \frac{1}{6}\Sigma(y_{i}-20)^2 = \frac{1}{6} *2 = \frac{1}{3} =0.3333\\$ 
+$\sigma^2_{y} = \frac{1}{6}\Sigma(y_{i}-20)^2 = \frac{1}{6} *2 = \frac{1}{3} =0.3333 \Longrightarrow \sigma_{y} = 0.5773503 \\$ 
 
 
 find sd
@@ -96,7 +96,4 @@ sd(GTA)
 
 #### Manually
 $\sigma^2_{y} = \frac{N}{N-1}P(1-P) \\$
-$N = 10, P = \frac{4}{10} \Longrightarrow \sigma^2_{y} = \frac{10}{9}0.4(0.6)  = 0.2667 \\$
-
-### Reason for difference in R vs Manual calculations
-The reason for difference is because in R the sd() is the sample sd not the population sd.
+$N = 10, P = \frac{4}{10} \Longrightarrow \sigma^2_{y} = \frac{10}{9}0.4(0.6)  = 0.2667 \Longrightarrow \sigma_{y} = 0.5163978 \\$
