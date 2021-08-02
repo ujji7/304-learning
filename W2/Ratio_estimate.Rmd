@@ -1,0 +1,69 @@
+---
+title: "Ratio Estimation"
+author: "Uzair Mirza"
+date: "23/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+# Ratio Estimation
+Here the goal is to see the average grocery bill of a house hold containing a certan number of people
+```{r}
+Household_Size= c(4, 5, 2, 4, 4, 1, 3, 5, 4, 6) 
+Grocery_Bill= c(373.74, 596.13, 200.01, 526.58, 405.47,  190.11, 325.73, 515.41, 323.70, 711.21)
+# Sample size
+n = length(Household_Size)
+# Population Size
+N = 1000
+```
+
+
+The ratio $\hat R$ for the sample is calculaetd by either summing the household size and dividing it by the grocery bill or instead of summing we can also work with the means of the two so we end up with
+```{r}
+# Ratio
+Rhat = mean(Grocery_Bill)/mean(Household_Size) 
+Rhat
+```
+
+Now to get the standard error and the confidence interval we will be doing the following calculations
+```{r}
+## Standard Error of Ratio                                                                    ## Standard Error 
+SE_Rhat<-sqrt((1/mean(Household_Size)^2 )*
+     (1-n/N)*(1/n)*
+  (var(Grocery_Bill)+Rhat^2*var(Household_Size)-
+     2*Rhat*cov(Grocery_Bill, Household_Size)))
+SE_Rhat
+
+### CI based on alpha = 0.05                                                                  ## Confidence Interval
+Rhat-qnorm(0.975)*SE_Rhat
+Rhat+qnorm(0.975)*SE_Rhat
+```
+
+To by pass all the calculations we can also use the package **"survey"** which does all the above things for us BUT not the confidence intervals.
+```{r, warning=F}
+library(survey)
+```
+
+Now in the package we will be using **"svydesign()"** to specify the survey we are running. \
+This function takes multiple arguments but the ones which are of our interest are id=~1 this used for clustering a 1 or 0 is used to specify no clustering. data=data.frame this is the sample dataframe we will be using and lastly fpc= this is the finite population correction which can be specified either as the total population size in each stratum or as the fraction of the total population that has been sampled ex: Population:Sample OR #Sample/#Population.
+```{r}
+# Now first we would need to make the data frame to feed in the function
+house_data<-tibble(id = 1:n, Household_Size, Grocery_Bill)
+
+# Now make the finite population correction MAKE THIS AS A VECTOR
+fpc.srs = as.vector(rep(N, n))
+# make the survey model
+house.design <- svydesign(id=~id, data=house_data, fpc=fpc.srs)
+## equvalently same result will be generated using
+#house.design <- svydesign(id=~1, data=house_data, fpc=fpc.srs)
+
+# Here the 1st entry is the numerator(yi) in the RHAT and the second entry is 
+# the Denomenator(xi)
+svyratio(~Grocery_Bill, ~Household_Size, 
+        design=house.design)
+```
+

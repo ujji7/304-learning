@@ -1,0 +1,79 @@
+---
+title: "W3 Baysian Regression Model(BRM)"
+author: "Uzair Mirza"
+date: "20/05/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(brms)
+library(tidyverse)
+```
+
+Setting up the data and making the plots
+```{r}
+# Data setup
+blockXspeed <- tibble(blocks = c(3,4,5,6,7,10),
+                      time = c(1,2,3,5,8,9))
+# Making the scatter plot
+    ## ALTERNATIVE CODE: From the data set make plot x = ??, y = ?? + type of the plot
+ggplot(blockXspeed, aes(x=blocks, y=time )) + geom_point()
+
+```
+Now we setup the model using the brm() and look at the results
+```{r}
+# will be using the brm() for Baysian Regression
+  # we declare our model equation uder formula, in the brm(formula = ?~?, data = ?, seed = ?)
+  # Setup of the model is similar to the normal regression y ~ xi + (xj)^2 + ....
+model <- brm(formula = time~blocks, data = blockXspeed, seed=69)
+
+# use the standanrd summary to look at the regression results
+summary(model)
+```
+Some interpratation of the output from the model:
+1st we have the regular $\hat\beta_{0}$ and $\hat\beta_{i}$ and they have the regular regression interpratation.
+The other thing is that the "Rhat" we **need** the Rhat value needs to be close to 1, if it is not 1 then we have a problem and we need to ....
+
+                      **FILL DESCRIPTION OF PROBLEM RELATED TO Rhat**
+
+Now let us try the previous thing with categorical variables
+```{r}
+# make the data frame
+                  # given you have a degree will you support liberal
+poll <- tibble(
+  phd = sample(x = c("yes", "no", "maybe"), prob = c(0.25,0.45,0.3), replace = T, size = 100),
+  support_liberal = sample(x = c("yes", "no"), replace = T, size = 100)
+)
+
+# setup the model       
+                                                    # ? is family the distribution of the response, Yes Binary values
+                                                    
+model.2 <- brm(formula = views ~ phd, data = poll,family = bernoulli(), seed = 69)
+
+```
+
+Interprating the output and making some plots of the model to test the reliability of the model          
+```{r}
+# the classic summary
+summary(model.2)
+
+## mcmc_plot()
+            # Verify what this shows, interpratation of it
+mcmc_plot(model.2)
+            # Verify what this shows, interpratation of it
+mcmc_plot(model.2, type = "hist")
+
+# we want to make sure our model is converging, to do this we need to check using this plot
+mcmc_plot(model.2, type = "trace")
+      # the graph we receive from trace shows us how the mode is working out the solution, 
+      # the ideal goal is to have the chains mixed and there are no diversions in between the chains
+      # problem would be if there chain i is units above or below chain j for either of the 3 graphs.
+
+# posterior plots with bayesplot              ## figure out what these are ad how to use them
+
+```
+        
+              
+
+
+

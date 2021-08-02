@@ -1,0 +1,46 @@
+---
+title: "Logistic_regression_estimation"
+author: "Uzair Mirza"
+date: "23/05/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+
+# read the data
+mydata <- read.csv("https://stats.idre.ucla.edu/stat/data/binary.csv")
+
+
+
+## Standard Logistic Regression,                                    WILL NOT BE USING THIS bc FPC, when refering surveys
+mylogit<-glm(admit ~ gre + gpa +
+               as.factor(rank), data=mydata, family="binomial")
+summary(mylogit)
+
+
+
+
+
+
+##                                                                    Survey Estimation for Logistic Regression
+n=length(mydata$admit)
+N=6000
+
+#library to be used
+library(survey)
+## Using the Survey Library,                              change this for the type of clustering to be used
+fpc.srs = rep(N, n)
+
+ucla.design <- svydesign(id=~1, data=mydata, fpc=fpc.srs)
+
+# use this for log regression,                                      Will be used as with the FPC 
+mysvyglm <- svyglm(admit ~ gre + gpa + as.factor(rank), 
+                   ucla.design, family="binomial")
+summary(mysvyglm)
+```
+
